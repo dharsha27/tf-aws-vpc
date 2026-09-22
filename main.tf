@@ -116,6 +116,18 @@ resource "aws_route_table" "database"{
    
 }
 
+resource "aws_db_subnet_group" "roboshop" {
+  name       = "${local.common_name}"
+  subnet_ids = aws_subnet.database[*].id
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "${local.common_name}"
+    }
+  )
+}
+
 # we are associating the route tables with subnetsids 
 
 resource "aws_route_table_association" "public"{
